@@ -1,5 +1,4 @@
 import axios from "axios";
-import { MARVEL_API_KEY } from "../../config/config";
 
 // URL base de la API de Marvel
 const BASE_URL = "https://gateway.marvel.com:443/v1/public/";
@@ -12,7 +11,8 @@ const api = axios.create({
 // Función para obtener los personajes de Marvel
 export const fetchCharacters = async (name = "", limit = 50) => {
   try {
-    let url = `/characters?limit=${limit}&apikey=${MARVEL_API_KEY}`;
+    // eslint-disable-next-line no-undef
+    let url = `/characters?limit=${limit}&apikey=${process.env.REACT_APP_MARVEL_API_KEY}`;
     if (name) {
       url += `&nameStartsWith=${encodeURIComponent(name)}`;
     }
@@ -28,7 +28,8 @@ export const fetchCharacters = async (name = "", limit = 50) => {
 // Función para obtener los cómics de un personaje específico de Marvel
 export const fetchComics = async (characterId) => {
   try {
-    const url = `/characters/${characterId}/comics?orderBy=onsaleDate&apikey=${MARVEL_API_KEY}`;
+    // eslint-disable-next-line no-undef
+    const url = `/characters/${characterId}/comics?orderBy=onsaleDate&apikey=${process.env.REACT_APP_MARVEL_API_KEY}`;
     const response = await api.get(url);
     return response.data;
   } catch (error) {
